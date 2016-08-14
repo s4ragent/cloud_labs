@@ -1,6 +1,4 @@
 #!/bin/bash
-cd ..
-source ./common.sh
 
 get_console(){
 name=$1
