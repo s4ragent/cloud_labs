@@ -9,6 +9,7 @@ if [ ! -e  /root/rac_on_xx ]; then
       yum -y install git screen qemu-img epel-release ansible
    fi
    git clone https://github.com/s4ragent/rac_on_xx /root/rac_on_xx
+   git clone https://github.com/s4ragent/cloud_labs /root/cloud_labs
 fi
 
 HasSwap=`free | grep Swap | awk '{print $2}'`
