@@ -95,7 +95,14 @@ deleteandstart(){
 
 ssh(){
 name=$1
-gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2" $3 $4 $5 $6 $7 $8 $9
+
+if [ "$2" != "" ]; then
+	gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2" $3 $4 $5 $6 $7 $8 $9
+else
+	gcloud compute ssh $name $2 $3 $4 $5 $6 $7 $8 $9
+fi
+
+
 }
 
 delete(){
