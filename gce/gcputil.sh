@@ -97,9 +97,17 @@ ssh(){
 name=$1
 
 if [ "$2" != "" ]; then
-	gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$3" $4 $5 $6 $7 $8 $9
+	if [ "$3" != "" ]; then
+		if [ "$4" != "" ]; then
+			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:$3:$4"
+		else
+			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$3"	
+		fi
+	else
+		gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2"
+	fi
 else
-	gcloud compute ssh $name $2 $3 $4 $5 $6 $7 $8 $9
+	gcloud compute ssh $name
 fi
 
 
