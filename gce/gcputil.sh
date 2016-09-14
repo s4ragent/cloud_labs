@@ -25,7 +25,7 @@ creategceinstance(){
 
 create_centos(){
 		name=$1
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image centos-7 --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family=centos-7 --image-project=centos-cloud --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3
 }
 
 create_rhel6(){
@@ -47,7 +47,7 @@ create_ubuntu(){
 
 create_centos_docker(){
 		name=$1
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image centos-7 --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/gce/enabledocker.sh
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family=centos-7 --image-project=centos-cloud --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/gce/enabledocker.sh
 }
 
 create_ubuntu_docker(){
