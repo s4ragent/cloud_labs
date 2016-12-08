@@ -1,5 +1,5 @@
 #!/bin/bash
-prefix="cloud_labs"
+prefix="cloudlabs"
 suffix=`ip a show eth0 | grep ether | awk '{print $2}' | sed -e s/://g`
 location="japanwest"
 vnet_addr="10.153.0.0/16"
