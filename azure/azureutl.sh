@@ -1,14 +1,26 @@
 #!/bin/bash
 prefix="cloud_labs"
 suffix=`ip a show eth0 | grep ether | awk '{print $2}' | sed -e s/://g`
+location="japanwest"
+vnet_addr="10.153.0.0/16"
+snet_addr="10.153.1.0/24"
 
-create_rg_storage_vnet(){
+create_first(){
 	rg_name=rg_${prefix}
 	vnet_name=vnet_${prefix}
 	snet_name=snet_${pfefix}
 	sa_name=${prefix}${suffix}
 	nsg_name=nsg_${prefix}
 	
+	ssh-keygen -t rsa -f ./${prefix} -P ""
+	chmod 600 ./${prefix}*
+	
+	azure group create -n rg_raconxx -l japanwest
+	azure network vnet create -g rg_raconxx -n vnet_raconxx -a 10.153.0.0/16 -l japanwest
+	azure network vnet subnet create -g rg_raconxx --vnet-name vnet_raconxx -n snet_raconxx -a 10.153.1.0/24
+	azure network public-ip create -g rg_raconxx -n ip_vm1 --location japanwest
+	
+	azure network nsg create -g TestRG -l westus -n NSG-FrontEnd
 	
 }
 
@@ -77,7 +89,7 @@ name=$1
 
 
 case "$1" in
-  "create_rg_first" ) shift;create_first $*;;
+  "create_first" ) shift;create_first $*;;
   "ssh" ) shift;ssh $*;;
   "reset_password" ) shift;reset_password $*;;
   "create_2012" ) shift;create_2012 $*;;
