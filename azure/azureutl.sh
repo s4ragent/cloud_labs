@@ -21,7 +21,9 @@ create_first(){
 	azure network public-ip create -g rg_raconxx -n ip_vm1 --location japanwest
 	
 	azure network nsg create -g TestRG -l westus -n NSG-FrontEnd
+	azure network nsg rule create -g <RGNAME> -a <NSGNAME> -n <NSGRULENAME>  --source-port-range '*'  --destination-port-range 22 --access Allow
 	
+	azure storage account create <SANAME> --type LRS -g <RGNAME> -l <LOCNAME>
 }
 
 create_centos(){
