@@ -121,22 +121,23 @@ stop(){
 
 ssh(){
 name=$1
-external_ip=`get_External_IP $name`
+pip=`get_External_IP $name`
 
 
 if [ "$2" != "" ]; then
 	if [ "$3" != "" ]; then
 		if [ "$4" != "" ]; then
-			ssh -i ./${prefix} -l $adminuser -g -L $2:$3:$4 $external_ip  
+			ssh -i ./${prefix} -l $adminuser -g -L $2:$3:$4 $pip  
 		else
-			ssh -i ./${prefix} -l $adminuser -g-L $2:127.0.0.1:$3 $external_ip	
+			ssh -i ./${prefix} -l $adminuser -g-L $2:127.0.0.1:$3 $pip	
 		fi
 	else
-		ssh -i ./${prefix} -l $adminuser -g -L $2:127.0.0.1:$2 $external_ip
+		ssh -i ./${prefix} -l $adminuser -g -L $2:127.0.0.1:$2 $pip
 	fi
 else
-	ssh -i ./${prefix} -l $adminuser $external_ip
+	ssh -i ./${prefix} -l $adminuser $pip
 fi
+
 }
 
 
