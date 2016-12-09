@@ -37,26 +37,28 @@ create_ip(){
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
 
+create_linux(){
+	name=$1
+	vmsize=$2
+	disksize=$3
+	image_urn=$4
+	
+	create_ip $name
+	
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+}
+
 create_centos(){
 	image_urn="OpenLogic:CentOS:7.2:latest"
 	name=$1
 	vmsize=$2
 	disksize=$3
-	
-	create_ip $name
-	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix} --vnet-name $vnet_name --vnet-subnet-name $snet_name
-	
+	create_linux $name $vmsize $disksize $image_urn	
 }
 
 create_oraclelinux(){
 	image_urn="Oracle:Oracle-Linux:7.2:latest"
-	
-		name=$1
-}
 
-create_2012(){
-		name=$1
 }
 
 create_ubuntu(){
@@ -65,6 +67,10 @@ create_ubuntu(){
 }
 
 create_oraclelinux_docker(){
+		name=$1
+}
+
+create_2012(){
 		name=$1
 }
 
@@ -83,6 +89,8 @@ deleteall(){
 
 delete(){
 	name=$1
+	azure vm delete  -g $rg_name -n $name -q
+	azure network public-ip delete -g $rg_name  -n ip_${name} -q
 }
 
 
