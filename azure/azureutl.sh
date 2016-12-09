@@ -23,8 +23,8 @@ create_first(){
 	azure network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
 
 	azure network nsg create -g $rg_name -l $location -n $nsg_name
-	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o * -e * -u 22
-	azure network nsg rule create -g $rg_name -a $nsg_name -n inner-rule -c Allow -p * -r Inbound -y 200 -f $vnet_addr -o * -e $vnet_addr -u *
+	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
+	azure network nsg rule create -g $rg_name -a $nsg_name -n inner-rule -c Allow -p * -r Inbound -y 200 -f $vnet_addr -o '*' -e $vnet_addr -u '*'
 	
 	
 	azure storage account create $sa_name --type LRS -g $rg_name -l $location
