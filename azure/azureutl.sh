@@ -42,7 +42,7 @@ create_first(){
 	
 }
 
-create_ip(){
+create_parts(){
 	name=$1
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
@@ -53,7 +53,7 @@ create_linux(){
 	disksize=$3
 	image_urn=$4
 	
-	create_ip $name
+	create_parts $name
 	
 	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -R $name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
@@ -100,6 +100,7 @@ deleteall(){
 delete(){
 	name=$1
 	azure vm delete  -g $rg_name -n $name -q
+	azure network nic delete -g $rg_name -n nic_${name} -q
 	azure network public-ip delete -g $rg_name  -n ip_${name} -q
 }
 
