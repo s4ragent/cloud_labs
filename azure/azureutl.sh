@@ -98,10 +98,6 @@ ssh(){
 	sleep 1
 }
 
-delete(){
-name=$1
-}
-
 
 case "$1" in
   "create_first" ) shift;create_first $*;;
