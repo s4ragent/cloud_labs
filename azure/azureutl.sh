@@ -21,6 +21,14 @@ get_External_IP(){
 	echo $External_IP
 }
 
+get_Internal_IP(){
+	name=$1
+	nic_name=nic_${name}
+	Internal_IP=`azure network nic show -g $rg_name -n $nic_name | grep "Private IP Address" | awk '{print $5}'`
+
+	echo $Internal_IP
+}
+
 
 create_first(){
 
