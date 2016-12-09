@@ -73,6 +73,7 @@ delete(){
 
 
 ssh(){
+	sleep 1
 }
 
 delete(){
