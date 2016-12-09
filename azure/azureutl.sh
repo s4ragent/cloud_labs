@@ -65,10 +65,7 @@ create_ubuntu_docker(){
 		name=$1
 }
 
-
-
 deleteall(){
-
 }
 
 delete(){
