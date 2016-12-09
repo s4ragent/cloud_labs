@@ -83,7 +83,6 @@ name=$1
 case "$1" in
   "create_first" ) shift;create_first $*;;
   "ssh" ) shift;ssh $*;;
-  "reset_password" ) shift;reset_password $*;;
   "create_2012" ) shift;create_2012 $*;;
   "create_2016" ) shift;create_2016 $*;;
   "create_oraclelinux" ) shift;create_oraclelinux $*;;
