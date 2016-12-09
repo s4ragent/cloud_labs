@@ -11,6 +11,7 @@ snet_name=snet_${prefix}
 sa_name=${prefix}${suffix}
 nsg_name=nsg_${prefix}
 
+adminuser="ops"
 
 get_External_IP(){
 	name=$1
@@ -54,7 +55,7 @@ create_linux(){
 	
 	create_ip $name
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
 
 create_centos(){
@@ -104,7 +105,23 @@ delete(){
 
 
 ssh(){
-	sleep 1
+name=$1
+external_ip=`get_External_IP $name`
+
+
+if [ "$2" != "" ]; then
+	if [ "$3" != "" ]; then
+		if [ "$4" != "" ]; then
+			ssh -i ./${prefix} -l $adminuser -g -L $2:$3:$4 $external_ip  
+		else
+			ssh -i ./${prefix} -l $adminuser -g-L $2:127.0.0.1:$3 $external_ip	
+		fi
+	else
+		ssh -i ./${prefix} -l $adminuser -g -L $2:127.0.0.1:$2 $external_ip
+	fi
+else
+	ssh -i ./${prefix} -l $adminuser $external_ip
+fi
 }
 
 
