@@ -24,10 +24,10 @@ create_first(){
 
 	azure network nsg create -g $rg_name -l $location -n $nsg_name
 	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
-	azure network vnet subnet set -g $rg_name -e $vnet_name -n $nsg_name -o $nsg_name
+	azure network vnet subnet set -g $rg_name -e $vnet_name -o $nsg_name -n $snet_name
 	
 	
-	azure storage account create $sa_name --sku-name LRS -g $rg_name -l $location
+	azure storage account create $sa_name --sku-name LRS --kind Storage -g $rg_name -l $location
 	
 	
 }
@@ -45,7 +45,7 @@ create_centos(){
 	
 	create_ip $name
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name}  -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix} --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix} --vnet-name $vnet_name --vnet-subnet-name $snet_name
 	
 }
 
