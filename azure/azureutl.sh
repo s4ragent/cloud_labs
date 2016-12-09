@@ -154,4 +154,5 @@ case "$1" in
   "deleteall" ) shift;deleteall $*;;
   "delete" ) shift;delete $*;;
   "stop" ) shift;stop $*;;
+  "get_External_IP" ) shift;get_External_IP $*;;
 esac
