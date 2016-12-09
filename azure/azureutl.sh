@@ -64,7 +64,7 @@ create_ubuntu_docker(){
 }
 
 deleteall(){
-	azure group delete -n $rg_name -l $location -q 
+	azure group delete -n $rg_name  -q 
 }
 
 delete(){
