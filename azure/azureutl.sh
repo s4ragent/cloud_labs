@@ -55,7 +55,7 @@ create_linux(){
 	
 	create_ip $name
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -R $name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
 
 create_centos(){
