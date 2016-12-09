@@ -103,6 +103,10 @@ delete(){
 	azure network public-ip delete -g $rg_name  -n ip_${name} -q
 }
 
+stop(){
+	name=$1
+	azure vm deallocate -g $rg_name -n $name
+}
 
 ssh(){
 name=$1
@@ -138,4 +142,5 @@ case "$1" in
   "create_oraclelinux_docker" ) shift;create_oraclelinux_docker $*;;
   "deleteall" ) shift;deleteall $*;;
   "delete" ) shift;delete $*;;
+  "stop" ) shift;stop $*;;
 esac
