@@ -37,14 +37,14 @@ create_first(){
 	azure network vnet subnet set -g $rg_name -e $vnet_name -o $nsg_name -n $snet_name
 	
 	
-	azure storage account create $sa_name --sku-name LRS --kind Storage -g $rg_name -l $location
+	
 	
 	
 }
 
 create_parts(){
 	name=$1
-	azure storage container create $container_name
+	azure storage account create ${name}${sa_name} --sku-name LRS --kind Storage -g $rg_name -l $location
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
 
@@ -56,7 +56,7 @@ create_linux(){
 	
 	create_parts $name
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o $sa_name -R $name -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${name}${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
 
 create_centos(){
@@ -103,6 +103,7 @@ delete(){
 	azure vm delete  -g $rg_name -n $name -q
 	azure network nic delete -g $rg_name -n nic_${name} -q
 	azure network public-ip delete -g $rg_name  -n ip_${name} -q
+	azure storage account delete -g $rg_name -q ${name}${sa_name}
 }
 
 stop(){
