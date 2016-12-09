@@ -38,10 +38,20 @@ create_ip(){
 }
 
 create_centos(){
-		name=$1
+	image_urn="OpenLogic:CentOS:7.2:latest"
+	name=$1
+	vmsize=$2
+	disksize=$3
+	
+	create_ip $name
+	
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name}  -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username azureuser --vm-size $vmsize --ssh-publickey-file ./${prefix} --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	
 }
 
 create_oraclelinux(){
+	image_urn="Oracle:Oracle-Linux:7.2:latest"
+	
 		name=$1
 }
 
@@ -50,6 +60,7 @@ create_2012(){
 }
 
 create_ubuntu(){
+	image_urn="canonical:ubuntuserver:16.04.0-LTS:latest"
 		name=$1
 }
 
