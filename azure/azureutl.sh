@@ -44,6 +44,7 @@ create_first(){
 
 create_parts(){
 	name=$1
+	azure storage container create $container_name
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
 
