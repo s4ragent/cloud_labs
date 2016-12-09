@@ -119,7 +119,7 @@ stop(){
 	azure vm deallocate -g $rg_name -n $name
 }
 
-ssh(){
+ssh2(){
 name=$1
 pip=`get_External_IP $name`
 
@@ -143,7 +143,7 @@ fi
 
 case "$1" in
   "create_first" ) shift;create_first $*;;
-  "ssh" ) shift;ssh $*;;
+  "ssh2" ) shift;ssh2 $*;;
   "create_2012" ) shift;create_2012 $*;;
   "create_2016" ) shift;create_2016 $*;;
   "create_oraclelinux" ) shift;create_oraclelinux $*;;
