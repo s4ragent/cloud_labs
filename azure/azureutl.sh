@@ -12,6 +12,15 @@ sa_name=${prefix}${suffix}
 nsg_name=nsg_${prefix}
 
 
+get_External_IP(){
+	name=$1
+	ip_name=ip_${name}
+	External_IP=`azure network public-ip show -g $rg_name -n $ip_name | grep "IP Address" | awk '{print $5}'`
+	
+	echo $External_IP
+}
+
+
 create_first(){
 
 	
