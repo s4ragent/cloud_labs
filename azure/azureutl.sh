@@ -7,7 +7,7 @@ snet_addr="10.153.1.0/24"
 
 rg_name=rg_${prefix}
 vnet_name=vnet_${prefix}
-snet_name=snet_${pfefix}
+snet_name=snet_${prefix}
 sa_name=${prefix}${suffix}
 nsg_name=nsg_${prefix}
 
@@ -21,8 +21,7 @@ create_first(){
 	azure group create -n $rg_name -l $location
 	azure network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
 	azure network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
-	
-	
+
 	azure network nsg create -g $rg_name -l $location -n $nsg_name
 	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o * -e * -u 22
 	azure network nsg rule create -g $rg_name -a $nsg_name -n inner-rule -c Allow -p * -r Inbound -y 200 -f $vnet_addr -o * -e $vnet_addr -u *
@@ -34,7 +33,6 @@ create_first(){
 create_parts(){
 	name=$1
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
-	
 }
 
 create_centos(){
@@ -74,23 +72,6 @@ delete(){
 
 
 ssh(){
-name=$1
-
-if [ "$2" != "" ]; then
-	if [ "$3" != "" ]; then
-		if [ "$4" != "" ]; then
-			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:$3:$4"
-		else
-			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$3"	
-		fi
-	else
-		gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2"
-	fi
-else
-	gcloud compute ssh $name
-fi
-
-
 }
 
 delete(){
