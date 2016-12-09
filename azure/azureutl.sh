@@ -32,7 +32,7 @@ create_first(){
 	
 }
 
-create_parts(){
+create_ip(){
 	name=$1
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
