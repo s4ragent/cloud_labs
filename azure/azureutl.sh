@@ -5,25 +5,36 @@ location="japanwest"
 vnet_addr="10.153.0.0/16"
 snet_addr="10.153.1.0/24"
 
+rg_name=rg_${prefix}
+vnet_name=vnet_${prefix}
+snet_name=snet_${pfefix}
+sa_name=${prefix}${suffix}
+nsg_name=nsg_${prefix}
+
+
 create_first(){
-	rg_name=rg_${prefix}
-	vnet_name=vnet_${prefix}
-	snet_name=snet_${pfefix}
-	sa_name=${prefix}${suffix}
-	nsg_name=nsg_${prefix}
+
 	
 	ssh-keygen -t rsa -f ./${prefix} -P ""
 	chmod 600 ./${prefix}*
 	
-	azure group create -n rg_raconxx -l japanwest
-	azure network vnet create -g rg_raconxx -n vnet_raconxx -a 10.153.0.0/16 -l japanwest
-	azure network vnet subnet create -g rg_raconxx --vnet-name vnet_raconxx -n snet_raconxx -a 10.153.1.0/24
-	azure network public-ip create -g rg_raconxx -n ip_vm1 --location japanwest
+	azure group create -n $rg_name -l $location
+	azure network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
+	azure network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
 	
-	azure network nsg create -g TestRG -l westus -n NSG-FrontEnd
-	azure network nsg rule create -g <RGNAME> -a <NSGNAME> -n <NSGRULENAME>  --source-port-range '*'  --destination-port-range 22 --access Allow
 	
-	azure storage account create <SANAME> --type LRS -g <RGNAME> -l <LOCNAME>
+	azure network nsg create -g $rg_name -l $location -n $nsg_name
+	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o * -e * -u 22
+	azure network nsg rule create -g $rg_name -a $nsg_name -n inner-rule -c Allow -p * -r Inbound -y 200 -f $vnet_addr -o * -e $vnet_addr -u *
+	
+	
+	azure storage account create $sa_name --type LRS -g $rg_name -l $location
+}
+
+create_parts(){
+	name=$1
+	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
+	
 }
 
 create_centos(){
