@@ -2,7 +2,9 @@
 
 #http://qiita.com/morikat/items/9351d669281ba7fbca39
 
-echo 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib' >> /etc/apt/sources.list
+CODENAME=`cat /etc/lsb-release  | grep CODENAME | awk -F "=" '{print $2}'`
+
+sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_release -cs)' contrib non-free' > /etc/apt/sources.list.d/virtualbox.list"
 wget https://www.virtualbox.org/download/oracle_vbox.asc
 apt-key add oracle_vbox.asc
 apt-get update
