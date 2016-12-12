@@ -32,6 +32,8 @@ make -C /usr/src/linux prepare modules_prepare
 
 apt-get install $VBOXVERSION
 
-VBOXDETAILVER=`VBoxManage -version | perl -ne 'if (/([\d]*).([\d]*).([\d]*)/){print "$1.$2.$3"}`
+VBOX_VERSION=`dpkg -s virtualbox-${VBOXVERSION} | grep '^Version: ' | sed -e 's/Version: \([0-9\.]*\)\-.*/\1/'`
+wget http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 #wget http://download.virtualbox.org/virtualbox/5.0.16/Oracle_VM_VirtualBox_Extension_Pack-5.0.16-105871.vbox-extpack
 #VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.0.16-105871.vbox-extpack
