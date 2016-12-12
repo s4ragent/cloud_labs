@@ -1,7 +1,7 @@
 #!bin/bash
 
 #http://qiita.com/morikat/items/9351d669281ba7fbca39
-
+VBOXVERSION="virtualbox-5.0"
 CODENAME=`cat /etc/lsb-release  | grep CODENAME | awk -F "=" '{print $2}'`
 
 sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_release -cs)' contrib non-free' > /etc/apt/sources.list.d/virtualbox.list"
@@ -30,7 +30,7 @@ printf 'CONFIG_LOCALVERSION="%s"\nCONFIG_CROSS_COMPILE=""\n' "${local:+-$local}"
 wget -O /usr/src/linux/Module.symvers "http://mirror.scaleway.com/kernel/${arch}/${release}/Module.symvers"
 make -C /usr/src/linux prepare modules_prepare
 
-apt-get install virtualbox-5.0
+apt-get install $VBOXVERSION
 
 #wget http://download.virtualbox.org/virtualbox/5.0.16/Oracle_VM_VirtualBox_Extension_Pack-5.0.16-105871.vbox-extpack
 #VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.0.16-105871.vbox-extpack
