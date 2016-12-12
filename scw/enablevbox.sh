@@ -7,6 +7,8 @@ wget https://www.virtualbox.org/download/oracle_vbox.asc
 apt-key add oracle_vbox.asc
 apt-get update
 
+apt-get install build-essential libssl-dev
+
 # Determine versions
 arch="$(uname -m)"
 release="$(uname -r)"
