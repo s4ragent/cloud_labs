@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install VirtualBox
 RUN echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib non-free" > /etc/apt/sources.list.d/virtualbox.list
 RUN apt-get update
-RUN apt-get install -y build-essential libssl-dev wget
+RUN apt-get install -y build-essential libssl-dev wget bc
 RUN wget https://www.virtualbox.org/download/oracle_vbox.asc
 RUN apt-key add oracle_vbox.asc
 RUN apt-get install -y --allow-unauthenticated virtualbox-5.1
