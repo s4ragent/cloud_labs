@@ -15,4 +15,5 @@ VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.v
 rm Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 
 COPY ./run.sh /
-#ENTRYPOINT ["/run.sh"]
+RUN chmod +x ./run.sh
+ENTRYPOINT ["/run.sh"]
