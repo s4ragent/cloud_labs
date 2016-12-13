@@ -18,4 +18,6 @@ printf 'CONFIG_LOCALVERSION="%s"\nCONFIG_CROSS_COMPILE=""\n' "${local:+-$local}"
 wget -O /usr/src/linux/Module.symvers "http://mirror.scaleway.com/kernel/${arch}/${release}/Module.symvers"
 make -C /usr/src/linux prepare modules_prepare
 
+/sbin/vboxconfig
+
 exec /bin/bash
