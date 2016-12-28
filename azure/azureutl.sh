@@ -37,6 +37,9 @@ create_first(){
 	chmod 600 ./${prefix}*
 	
 	azure group create -n $rg_name -l $location
+
+	azure storage account create ${sa_name} --sku-name LRS --kind Storage -g $rg_name -l $location
+
 	azure network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
 	azure network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
 
@@ -52,7 +55,7 @@ create_first(){
 
 create_parts(){
 	name=$1
-	azure storage account create ${name}${sa_name} --sku-name LRS --kind Storage -g $rg_name -l $location
+
 	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 }
 
