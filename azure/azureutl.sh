@@ -56,7 +56,7 @@ create_first(){
 create_parts(){
 	name=$1
 
-	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
+
 }
 
 create_linux(){
@@ -65,9 +65,9 @@ create_linux(){
 	disksize=$3
 	image_urn=$4
 	
-	create_parts $name
+	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${name}${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
 
 create_centos(){
@@ -80,7 +80,10 @@ create_centos(){
 
 create_oraclelinux(){
 	image_urn="Oracle:Oracle-Linux:7.2:latest"
-
+	name=$1
+	vmsize=$2
+	disksize=$3
+	create_linux $name $vmsize $disksize $image_urn	
 }
 
 create_ubuntu(){
@@ -90,6 +93,7 @@ create_ubuntu(){
 
 create_oraclelinux_docker(){
 		name=$1
+
 }
 
 create_2012(){
