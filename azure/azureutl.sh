@@ -118,7 +118,6 @@ delete(){
 	azure vm delete  -g $rg_name -n $name -q
 	azure network nic delete -g $rg_name -n nic_${name} -q
 	azure network public-ip delete -g $rg_name  -n ip_${name} -q
-	azure storage account delete -g $rg_name -q ${name}${sa_name}
 }
 
 stop(){
