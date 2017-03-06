@@ -16,15 +16,14 @@ adminuser="azureuser"
 get_External_IP(){
 	name=$1
 	ip_name=ip_${name}
-	External_IP=`az network public-ip show -g $rg_name -n $ip_name | grep "IP Address" | awk '{print $5}'`
+	External_IP=`az vm show -g $rg_name -n $name -d | grep publicIps | awk -F '"' '{print $4}'`
 	
 	echo $External_IP
 }
 
 get_Internal_IP(){
 	name=$1
-	nic_name=nic_${name}
-	Internal_IP=`az network nic show -g $rg_name -n $nic_name | grep "Private IP Address" | awk '{print $5}'`
+	Internal_IP=`az vm show -g $rg_name -n $name -d | grep privateIps | awk -F '"' '{print $4}'`
 
 	echo $Internal_IP
 }
