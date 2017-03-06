@@ -6,7 +6,7 @@ TENANT="<your tenant id>"
 
 
 ACCOUNT_SERVICE="https://identity.tyo1.conoha.io/" # TODO : リージョン指定にしてここは自動取得したい。とりあえずはリージョンに合った identity API の URL をここに指定すれば動くはず。
-TC_FLAVOR="g-1gb"  # VM Plan (この場合1GBプラン)
+FLAVOR="g-1gb"  # VM Plan (この場合1GBプラン)
 APPLY_SECURITY_GROUP="gncs-ipv4-all"
 
 ident_resp=$( curl -X POST -H "Accept: application/json" -d "{\"auth\":{\"passwordCredentials\":{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\"},\"tenantId\":\"$TENANT\"}}" "$ACCOUNT_SERVICE/v2.0/tokens" ) 
@@ -30,7 +30,29 @@ delete_image(){
   delete_resp=$(curl -i -X DELETE -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images/$image_id" )
 }
 
+delete_vm(){
+}
+
+#1 image_name
+get_vm(){
+  image_id=$(get_image $1)
+  vmlist_resp=$(curl -i -X GET -H "Accept: application/json" -H "image: $1" -H "X-Auth-Token: $token" "$compute_service/servers)
+  vm_id=$( echo $vmlist_resp | jq ".servers[].id" | head -n 1 | sed "s/\"//g" )
+  echo $vm_id
+}
+
+#$1 image_name $2 vm_name
+create_vm(){
+  imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
+  image_id=$( echo $imagelist_resp | jq ".images[] | select(.name == \"$1\") | .id" | sed "s/\"//g" )
+  flavorlist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$compute_service/flavors/detail" )
+  flavor_id=$( echo $flavorlist_resp | jq ".flavors[] | select(.name == \"$FLAVOR\") | .id" | sed "s/\"//g" )
+  makevm_resp=$( curl -X POST -H "Accept: application/json" -H "X-Auth-Token: $token" -d "{\"server\": {\"imageRef\": \"$image_id\",\"flavorRef\": \"$flavor_id\",\"security_groups\":[{\"name\": \"default\"},{\"name\": \"$APPLY_SECURITY_GROUP\"}]}}" "$compute_service/servers" )
+}
 
 case "$1" in
   "delete_image" ) shift;delete_image $*;;
+  "get_image" ) shift;get_image $*;;
+  "get_vm" ) shift;get_vm $*;;
+  "create_vm" ) shift;create_vm $*;;
 esac
