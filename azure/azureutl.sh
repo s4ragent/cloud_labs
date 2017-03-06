@@ -123,6 +123,11 @@ stop(){
 	az vm deallocate -g $rg_name -n $name
 }
 
+start(){
+	name=$1
+	az vm start -g $rg_name -n $name
+}
+
 ssh2(){
 name=$1
 pip=`get_External_IP $name`
