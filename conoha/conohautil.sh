@@ -28,9 +28,6 @@ delete_image(){
   delete_resp=$(curl -i -X DELETE -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images/$image_id" )
 }
 
-delete_vm(){
-  sleep 1
-}
 
 #1 image_name
 get_vm(){
@@ -41,7 +38,13 @@ get_vm(){
   echo $vm_id
 }
 
-#$1 image_name $2 vm_name
+#$1 image_name
+delete_vm(){
+  vm_id=$(get_vm $1)
+  delete_resp=$(curl -i -X DELETE -H "Accept: application/json" -H "X-Auth-Token: $token" "$compute_service/servers/$vm_id")
+}
+
+#$1 image_name
 create_vm(){
   imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
   image_id=$( echo $imagelist_resp | jq ".images[] | select(.name == \"$1\") | .id" | sed "s/\"//g" )
