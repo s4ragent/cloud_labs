@@ -40,8 +40,7 @@ create_first(){
 
 	az storage account create -n ${sa_name} --sku Standard_LRS --kind Storage -g $rg_name -l $location
 
-	az network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
-	az network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
+	az network vnet create -g $rg_name -n $vnet_name --address-prefix $vnet_addr --subnet-name $snet_name --subnet-prefix $snet_addr
 
 	az network nsg create -g $rg_name -l $location -n $nsg_name
 	az network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
