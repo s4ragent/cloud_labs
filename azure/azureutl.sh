@@ -160,4 +160,5 @@ case "$1" in
   "delete" ) shift;delete $*;;
   "stop" ) shift;stop $*;;
   "get_External_IP" ) shift;get_External_IP $*;;
+  "get_Internal_IP" ) shift;get_Internal_IP $*;;
 esac
