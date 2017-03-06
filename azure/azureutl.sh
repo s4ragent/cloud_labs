@@ -109,7 +109,7 @@ create_ubuntu_docker(){
 }
 
 deleteall(){
-	azure group delete -n $rg_name  -q
+	az group delete -n $rg_name  -q
 	rm -rf ./${prefix}*
 }
 
