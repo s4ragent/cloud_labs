@@ -1,8 +1,6 @@
 
 # Setting
-USERNAME="<api username>"  # ConoHa API access Account
-PASSWORD="<api password>"
-TENANT="<your tenant id>"
+source ./env.sh
 
 
 ACCOUNT_SERVICE="https://identity.tyo1.conoha.io/" # TODO : リージョン指定にしてここは自動取得したい。とりあえずはリージョンに合った identity API の URL をここに指定すれば動くはず。
@@ -38,8 +36,10 @@ delete_vm(){
 get_vm(){
   image_id=$(get_image $1)
   vmlist_resp=$(curl -i -X GET -H "Accept: application/json" -H "image: $1" -H "X-Auth-Token: $token" "$compute_service/servers")
-  vm_id=$( echo $vmlist_resp | jq ".servers.id" | head -n 1 | sed "s/\"//g" )
-  echo $vm_id
+  #vm_id=$( echo $vmlist_resp | jq ".servers.id" | head -n 1 | sed "s/\"//g" )
+  vm_id=$( echo $vmlist_resp | jq ".servers[]"| sed "s/\"//g" )
+
+echo $vm_id
 }
 
 #$1 image_name $2 vm_name
