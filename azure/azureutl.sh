@@ -38,7 +38,7 @@ create_first(){
 	
 	az group create -n $rg_name -l $location
 
-	az storage account create -n ${sa_name} --sku Standard_LRS --kind Storage -g $rg_name -l $location
+	#az storage account create -n ${sa_name} --sku Standard_LRS --kind Storage -g $rg_name -l $location
 
 	az network vnet create -g $rg_name -n $vnet_name --address-prefix $vnet_addr --subnet-name $snet_name --subnet-prefix $snet_addr
 
