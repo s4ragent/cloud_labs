@@ -16,7 +16,7 @@ adminuser="ops"
 get_External_IP(){
 	name=$1
 	ip_name=ip_${name}
-	External_IP=`azure network public-ip show -g $rg_name -n $ip_name | grep "IP Address" | awk '{print $5}'`
+	External_IP=`az network public-ip show -g $rg_name -n $ip_name | grep "IP Address" | awk '{print $5}'`
 	
 	echo $External_IP
 }
@@ -24,7 +24,7 @@ get_External_IP(){
 get_Internal_IP(){
 	name=$1
 	nic_name=nic_${name}
-	Internal_IP=`azure network nic show -g $rg_name -n $nic_name | grep "Private IP Address" | awk '{print $5}'`
+	Internal_IP=`az network nic show -g $rg_name -n $nic_name | grep "Private IP Address" | awk '{print $5}'`
 
 	echo $Internal_IP
 }
@@ -36,16 +36,16 @@ create_first(){
 	ssh-keygen -t rsa -f ./${prefix} -P ""
 	chmod 600 ./${prefix}*
 	
-	azure group create -n $rg_name -l $location
+	az group create -n $rg_name -l $location
 
-	azure storage account create ${sa_name} --sku-name LRS --kind Storage -g $rg_name -l $location
+	az storage account create ${sa_name} --sku-name LRS --kind Storage -g $rg_name -l $location
 
-	azure network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
-	azure network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
+	az network vnet create -g $rg_name -n $vnet_name -a $vnet_addr -l $location
+	az network vnet subnet create -g $rg_name --vnet-name $vnet_name -n $snet_name -a $snet_addr
 
-	azure network nsg create -g $rg_name -l $location -n $nsg_name
-	azure network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
-	azure network vnet subnet set -g $rg_name -e $vnet_name -o $nsg_name -n $snet_name
+	az network nsg create -g $rg_name -l $location -n $nsg_name
+	az network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
+	az network vnet subnet set -g $rg_name -e $vnet_name -o $nsg_name -n $snet_name
 	
 	
 	
@@ -65,9 +65,9 @@ create_linux(){
 	disksize=$3
 	image_urn=$4
 	
-	azure network public-ip create -g $rg_name  -n ip_${name} --location $location
+	az network public-ip create -g $rg_name  -n ip_${name} --location $location
 	
-	azure vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	az vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
 }
 
 create_centos(){
@@ -115,14 +115,14 @@ deleteall(){
 
 delete(){
 	name=$1
-	azure vm delete  -g $rg_name -n $name -q
-	azure network nic delete -g $rg_name -n nic_${name} -q
-	azure network public-ip delete -g $rg_name  -n ip_${name} -q
+	az vm delete  -g $rg_name -n $name -q
+	az network nic delete -g $rg_name -n nic_${name} -q
+	az network public-ip delete -g $rg_name  -n ip_${name} -q
 }
 
 stop(){
 	name=$1
-	azure vm deallocate -g $rg_name -n $name
+	az vm deallocate -g $rg_name -n $name
 }
 
 ssh2(){
