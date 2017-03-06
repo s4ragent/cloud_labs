@@ -109,15 +109,15 @@ create_ubuntu_docker(){
 }
 
 deleteall(){
-	az group delete -n $rg_name  -q
+	az group delete -n $rg_name -y
 	rm -rf ./${prefix}*
 }
 
 delete(){
 	name=$1
-	az vm delete  -g $rg_name -n $name -q
-	az network nic delete -g $rg_name -n nic_${name} -q
-	az network public-ip delete -g $rg_name  -n ip_${name} -q
+	az vm delete  -g $rg_name -n $name -y
+	az network nic delete -g $rg_name -n nic_${name} -y
+	az network public-ip delete -g $rg_name  -n ip_${name} -y
 }
 
 stop(){
