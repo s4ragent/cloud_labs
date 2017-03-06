@@ -55,4 +55,5 @@ case "$1" in
   "get_image" ) shift;get_image $*;;
   "get_vm" ) shift;get_vm $*;;
   "create_vm" ) shift;create_vm $*;;
+  "delete_vm" ) shift;delete_vm $*;;
 esac
