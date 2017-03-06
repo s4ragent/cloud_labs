@@ -11,7 +11,7 @@ snet_name=snet_${prefix}
 sa_name=${prefix}${suffix}
 nsg_name=nsg_${prefix}
 
-adminuser="ops"
+adminuser="azureuser"
 
 get_External_IP(){
 	name=$1
@@ -66,7 +66,7 @@ create_linux(){
 	az network public-ip create -g $rg_name  -n ip_${name} --location $location
 	
 	
-	az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --size $vmsize --data-disk-sizes-gb $disksize --ssh-key-value ~/.ssh/id_rsa.pub --nics $ip_${name} --vnet-name $vnet_name --subnet $snet_name
+	az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --size $vmsize --data-disk-sizes-gb $disksize --ssh-key-value ./id_rsa.pub --nics $ip_${name} --vnet-name $vnet_name --subnet $snet_name
 	
 }
 
