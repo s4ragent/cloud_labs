@@ -31,14 +31,14 @@ delete_image(){
 }
 
 delete_vm(){
-  #;;;
+  sleep 1
 }
 
 #1 image_name
 get_vm(){
   image_id=$(get_image $1)
   vmlist_resp=$(curl -i -X GET -H "Accept: application/json" -H "image: $1" -H "X-Auth-Token: $token" "$compute_service/servers")
-  vm_id=$( echo $vmlist_resp | jq ".servers[].id" | head -n 1 | sed "s/\"//g" )
+  vm_id=$( echo $vmlist_resp | jq ".servers.id" | head -n 1 | sed "s/\"//g" )
   echo $vm_id
 }
 
