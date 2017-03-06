@@ -21,6 +21,7 @@ network_service=$( echo $ident_resp | jq ".access.serviceCatalog[] | select(.typ
 get_image(){
   imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
   image_id=$( echo $imagelist_resp | jq ".images[] | select(.name == \"$1\") | .id" | sed "s/\"//g" )
+  echo $image_id
 }
 
 #$1 image_name
