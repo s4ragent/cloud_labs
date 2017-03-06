@@ -43,12 +43,11 @@ create_first(){
 	az network vnet create -g $rg_name -n $vnet_name --address-prefix $vnet_addr --subnet-name $snet_name --subnet-prefix $snet_addr
 
 	az network nsg create -g $rg_name -l $location -n $nsg_name
-	az network nsg rule create -g $rg_name -a $nsg_name -n ssh-rule -c Allow -p Tcp -r Inbound -y 100 -f Internet -o '*' -e '*' -u 22
-	az network vnet subnet set -g $rg_name -e $vnet_name -o $nsg_name -n $snet_name
 	
-	
-	
-	
+	az network nsg rule create --resource-group $rg_name --nsg-name $nsg_name --name RuleSSH --protocol tcp --direction inbound --priority 1000 --source-address-prefix '*' --source-port-range '*' --destination-address-prefix '*' --destination-port-range 22 --access allow
+
+	az network vnet subnet update -resource-group $rg_name --vnet-name $vnet_name --name $snet_name --network-security-group $nsg_name
+
 	
 }
 
