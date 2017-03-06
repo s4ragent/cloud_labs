@@ -31,6 +31,7 @@ delete_image(){
 }
 
 delete_vm(){
+  #;;;
 }
 
 #1 image_name
