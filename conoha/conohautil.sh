@@ -9,6 +9,9 @@ ACCOUNT_SERVICE="https://identity.tyo1.conoha.io/" # TODO : リージョン指�
 TC_FLAVOR="g-1gb"  # VM Plan (この場合1GBプラン)
 APPLY_SECURITY_GROUP="gncs-ipv4-all"
 
+ident_resp=$( curl -X POST -H "Accept: application/json" -d "{\"auth\":{\"passwordCredentials\":{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\"},\"tenantId\":\"$TENANT\"}}" "$ACCOUNT_SERVICE/v2.0/tokens" ) 
+
+
 token=$( echo $ident_resp | jq ".access.token.id" | sed "s/\"//g" )
 image_service=$( echo $ident_resp | jq ".access.serviceCatalog[] | select(.type == \"image\") | .endpoints[0].publicURL" | sed "s/\"//g" )
 compute_service=$( echo $ident_resp | jq ".access.serviceCatalog[] | select(.type == \"compute\") | .endpoints[0].publicURL" | sed "s/\"//g" )
@@ -23,7 +26,7 @@ get_image(){
 #$1 image_name
 delete_image(){
   image_id=$(get_image $1)
-  delete_resp=$(curl -i -X DELETE -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
+  delete_resp=$(curl -i -X DELETE -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images/$image_id" )
 }
 
 
