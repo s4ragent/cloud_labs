@@ -115,8 +115,8 @@ deleteall(){
 delete(){
 	name=$1
 	az vm delete  -g $rg_name -n $name -y
-	az network nic delete -g $rg_name -n nic_${name} -y
-	az network public-ip delete -g $rg_name  -n ip_${name} -y
+	az network nic delete -g $rg_name -n nic_${name}
+	az network public-ip delete -g $rg_name  -n ip_${name}
 }
 
 stop(){
