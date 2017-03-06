@@ -65,7 +65,7 @@ create_linux(){
 	
 	#az network public-ip create -g $rg_name  -n ip_${name} --location $location
 		
-	az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --size $vmsize --data-disk-sizes-gb $disksize --ssh-key-value ./${prefix}.pub --nics nic_${name} --public-ip-address $ip_${name} --vnet-name $vnet_name --subnet $snet_name --storage-sku Standard_LRS
+	az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --size $vmsize --data-disk-sizes-gb $disksize --ssh-key-value ./${prefix}.pub --public-ip-address ip_${name} --vnet-name $vnet_name --subnet $snet_name --storage-sku Standard_LRS
 	
 }
 
