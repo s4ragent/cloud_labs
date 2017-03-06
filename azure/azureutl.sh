@@ -65,7 +65,9 @@ create_linux(){
 	
 	az network public-ip create -g $rg_name  -n ip_${name} --location $location
 	
-	az vm create -g $rg_name -n $name --nic-name nic_${name} -i ip_${name} -o ${sa_name} -x data-${name} -e $disksize --location $location --os-type Linux --image-urn $image_urn --admin-username $adminuser --vm-size $vmsize --ssh-publickey-file ./${prefix}.pub --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	
+	az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --size $vmsize --data-disk-sizes-gb $disksize --ssh-key-value ~/.ssh/id_rsa.pub --nics $ip_${name} --vnet-name $vnet_name --vnet-subnet-name $snet_name
+	
 }
 
 create_centos(){
