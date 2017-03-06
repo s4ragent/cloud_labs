@@ -37,9 +37,8 @@ get_vm(){
   image_id=$(get_image $1)
   vmlist_resp=$(curl -X GET -H "Accept: application/json" -H "image: $1" -H "X-Auth-Token: $token" "$compute_service/servers")
   #vm_id=$( echo $vmlist_resp | jq ".servers.id" | head -n 1 | sed "s/\"//g" )
-  vm_id=$( echo $vmlist_resp | jq ".servers[]"| sed "s/\"//g" )
-
-echo $vm_id
+  vm_id=$( echo $vmlist_resp | jq ".servers[1].id"| sed "s/\"//g" )
+  echo $vm_id
 }
 
 #$1 image_name $2 vm_name
