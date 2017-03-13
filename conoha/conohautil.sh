@@ -23,7 +23,7 @@ get_image(){
 }
 
 list_image(){
-  imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
+  imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "owner: $TENANT" -H "X-Auth-Token: $token" "$image_service/v2/images" )
   echo $imagelist_resp | jq ".images[]"
 }
 
