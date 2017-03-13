@@ -22,6 +22,13 @@ get_image(){
   echo $image_id
 }
 
+list_image(){
+  imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "X-Auth-Token: $token" "$image_service/v2/images" )
+  echo $imagelist_resp | jq ".images[]
+}
+
+
+
 #$1 image_name
 delete_image(){
   image_id=$(get_image $1)
@@ -56,6 +63,7 @@ create_vm(){
 case "$1" in
   "delete_image" ) shift;delete_image $*;;
   "get_image" ) shift;get_image $*;;
+  "list_image" ) shift;list_image $*;;
   "get_vm" ) shift;get_vm $*;;
   "create_vm" ) shift;create_vm $*;;
   "delete_vm" ) shift;delete_vm $*;;
