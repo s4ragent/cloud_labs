@@ -24,7 +24,7 @@ get_image(){
 
 list_image(){
   imagelist_resp=$( curl -X GET -H "Accept: application/json" -H "limit: 3" -H "owner: $TENANT" -H "X-Auth-Token: $token" "$image_service/v2/images" )
-  echo $imagelist_resp | jq ".images[]| select(.name | startswith("2017"))"
+  echo $imagelist_resp | jq ".images[]| select(.name | startswith("201"))"
 }
 
 
