@@ -86,7 +86,10 @@ create_oraclelinux(){
 
 create_ubuntu(){
 	image_urn="canonical:ubuntuserver:16.04.0-LTS:latest"
-		name=$1
+	name=$1
+	vmsize=$2
+	disksize=$3
+	create_linux $name $vmsize $disksize $image_urn	
 }
 
 create_oraclelinux_docker(){
