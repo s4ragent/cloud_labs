@@ -139,15 +139,15 @@ pip=`get_External_IP $name`
 if [ "$2" != "" ]; then
 	if [ "$3" != "" ]; then
 		if [ "$4" != "" ]; then
-			ssh -i ./${prefix} -l $adminuser -g -L $2:$3:$4 $pip  
+			ssh  -o ServerAliveInterval=30 -i ./${prefix} -l $adminuser -g -L $2:$3:$4 $pip  
 		else
-			ssh -i ./${prefix} -l $adminuser -g-L $2:127.0.0.1:$3 $pip	
+			ssh  -o ServerAliveInterval=30 -i ./${prefix} -l $adminuser -g-L $2:127.0.0.1:$3 $pip	
 		fi
 	else
-		ssh -i ./${prefix} -l $adminuser -g -L $2:127.0.0.1:$2 $pip
+		ssh  -o ServerAliveInterval=30 -i ./${prefix} -l $adminuser -g -L $2:127.0.0.1:$2 $pip
 	fi
 else
-	ssh -i ./${prefix} -l $adminuser $pip
+	ssh  -o ServerAliveInterval=30 -i ./${prefix} -l $adminuser $pip
 fi
 
 }
