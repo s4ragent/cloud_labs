@@ -161,6 +161,7 @@ resize()
 
 listsize()
 {
+	az vm list-sizes --location $location
 }
 
 case "$1" in
