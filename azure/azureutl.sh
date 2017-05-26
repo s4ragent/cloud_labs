@@ -152,10 +152,22 @@ fi
 
 }
 
+resize()
+{
+	name=$1
+	vmsize=$2
+	az vm resize --resource-group $rg_name --name $name --size $vmsize
+}
+
+listsize()
+{
+}
 
 case "$1" in
   "create_first" ) shift;create_first $*;;
   "ssh2" ) shift;ssh2 $*;;
+  "listsize" ) shift;listsize $*;;
+  "resize" ) shift;resize $*;;
   "create_2012" ) shift;create_2012 $*;;
   "create_2016" ) shift;create_2016 $*;;
   "create_oraclelinux" ) shift;create_oraclelinux $*;;
