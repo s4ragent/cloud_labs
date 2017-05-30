@@ -31,9 +31,10 @@ get_Internal_IP(){
 
 create_first(){
 
-	
+if [ ! -e ${prefix} ]; then
 	ssh-keygen -t rsa -f ./${prefix} -P ""
 	chmod 600 ./${prefix}*
+fi
 	
 	az group create -n $rg_name -l $location
 
@@ -111,7 +112,6 @@ create_ubuntu_docker(){
 
 deleteall(){
 	az group delete -n $rg_name -y
-	rm -rf ./${prefix}*
 }
 
 delete(){
