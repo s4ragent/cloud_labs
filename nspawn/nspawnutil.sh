@@ -1,29 +1,22 @@
-#/bin/bash
+#!/bin/bash
+if [ ! -e  /root/rac_on_xx ]; then
+   if [ -e /etc/debian_version ]; then
+      apt-get update
+      apt-get install -y git screen qemu-utils ansible
+   elif [ -e /etc/redhat-release ]; then
+      sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
+      yum clean all
+      yum -y install git screen qemu-img epel-release
+      yum -y install ansible
+   fi
+   git clone https://github.com/s4ragent/rac_on_xx /root/rac_on_xx
+   git clone https://github.com/s4ragent/cloud_labs /root/cloud_labs
+fi
 
-container=rac
-
-ansible_ssh_private_key_file=cloud_labs
-
-		ssh-keygen -t rsa -P "" -f $ansible_ssh_private_key_file
-		chmod 600 ${ansible_ssh_private_key_file}*
-
-
-mkdir -p /var/lib/machines/$container/etc/yum.repos.d/
-
-curl -L -o /var/lib/machines/$container/etc/yum.repos.d/public-yum-ol7.repo http://yum.oracle.com/public-yum-ol7.repo
-
-yum -c /var/lib/machines/$container/etc/yum.repos.d/public-yum-ol7.repo -y --nogpg --installroot=/var/lib/machines/$container install systemd openssh openssh-server passwd yum sudo oraclelinux-release vim-minimal iproute initscripts
-
-touch /var/lib/machines/$container/etc/sysconfig/network
-
-
-cat << EOF > /etc/sysconfig/network-scripts/ifcfg-br0
-DEVICE=br0
-TYPE=Bridge
-IPADDR=172.64.0.1
-NETMASK=255.255.255.0
-ONBOOT=yes
-BOOTPROTO=static
-NM_CONTROLLED=no
-DELAY=0
-EOF
+HasSwap=`free | grep Swap | awk '{print $2}'`
+if [ "$HasSwap" = "0" ]; then
+	dd if=/dev/zero of=/var/tmp/swap.img bs=1M count=8192
+	mkswap /var/tmp/swap.img
+	sh -c 'echo "/var/tmp/swap.img swap swap defaults 0 0" >> /etc/fstab'
+	swapon -a
+fi
