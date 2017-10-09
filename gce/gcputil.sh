@@ -28,10 +28,10 @@ create_centos(){
 		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
-create_custom(){
-		IMAGE_OPS="--image-family=centos-7 --image-project=centos-cloud"
+create_nested(){
+	name=$1
+		IMAGE_OPS="--image nested_${name}"
 		
-		name=$1	
 		if [ "$4" = "preemptible" ]; then
   		OPS="--preemptible --maintenance-policy TERMINATE"
   	else
