@@ -94,6 +94,7 @@ case "$1" in
   "ssh" ) shift;ssh $*;;
   "reset_password" ) shift;reset_password $*;;
   "create_2012" ) shift;create_2012 $*;;
+  "create_image" ) shift;create_image $*;;
   "create_rhel6" ) shift;create_rhel6 $*;;
   "create_centos" ) shift;create_centos $*;;
   "create_ubuntu" ) shift;create_ubuntu $*;;
