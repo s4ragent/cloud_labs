@@ -19,6 +19,7 @@ if [ ! -e  /root/rac_on_xx ]; then
    elif [ -e /etc/redhat-release ]; then
       sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
       cd /etc/yum.repos.d
+      yum -y install wget
 						wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 						yum clean all
 						yum install -y epel-release 
