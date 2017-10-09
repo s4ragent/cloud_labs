@@ -97,6 +97,7 @@ case "$1" in
   "create_image" ) shift;create_image $*;;
   "create_rhel6" ) shift;create_rhel6 $*;;
   "create_centos" ) shift;create_centos $*;;
+  "create_nested" ) shift;create_nested $*;;
   "create_ubuntu" ) shift;create_ubuntu $*;;
   "create_centos_docker" ) shift;create_centos_docker $*;;
   "create_ubuntu_docker" ) shift;create_ubuntu_docker $*;;
