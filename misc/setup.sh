@@ -24,7 +24,7 @@ if [ ! -e  /root/rac_on_xx ]; then
 						yum clean all
 						yum install -y epel-release 
 						yum install -y binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
-						yum install -y python-pip openssl-devel gcc python-devel git unzip Virtualbox-${VBOXVERSION} --enablerepo=epel
+						yum install -y python-pip openssl-devel gcc python-devel git unzip VirtualBox-${VBOXVERSION} --enablerepo=epel
 						yum -y install  https://releases.hashicorp.com/vagrant/${VAGRANTVERSION}/vagrant_${VAGRANTVERSION}_x86_64.rpm
    fi
    git clone https://github.com/s4ragent/rac_on_xx /root/rac_on_xx
