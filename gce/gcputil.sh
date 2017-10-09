@@ -1,6 +1,7 @@
 #!/bin/bash
 ZONE="us-central1-b"
-
+#n1-highmem-4 4vcpu	26 GB
+#g1-small	    1	vcpu  1.70
 
 get_console(){
 name=$1
@@ -15,6 +16,9 @@ creategcedisk(){
 	gcloud compute disks create "$1" --size $2 --type "pd-ssd"
 }
 
+#1 name $2 machine type $3 disksize $4 preemptible
+#ex create_centos centos n1-highmem-4 200 preemptible
+#ex create_centos centos g1-small 20 preemptible
 create_centos(){
 		IMAGE_OPS="--image-family=centos-7 --image-project=centos-cloud"
 		
