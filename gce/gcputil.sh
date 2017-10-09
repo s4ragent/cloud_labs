@@ -34,7 +34,7 @@ create_centos(){
 
 create_nested(){
 	name=$1
-		IMAGE_OPS="--image nested_${name}"
+		IMAGE_OPS="--image nested-${name}"
 		
 		if [ "$4" = "preemptible" ]; then
   		OPS="--preemptible --maintenance-policy TERMINATE"
@@ -52,15 +52,15 @@ create_ubuntu(){
 
 create_image(){
 		name=$1
-		gcloud compute disks snapshot $name --snapshot-names snapshot_${name} --zone $ZONE
+		gcloud compute disks snapshot $name --snapshot-names snapshot-${name} --zone $ZONE
 		
-		gcloud compute disks create disk_temp_${name} --source-snapshot snapshot_${name} --zone $ZONE
+		gcloud compute disks create disk-temp-${name} --source-snapshot snapshot-${name} --zone $ZONE
 
-		gcloud compute snapshots delete --quiet snapshot_${name}
+		gcloud compute snapshots delete --quiet snapshot-${name}
 
-  gcloud compute images create nested_${name} --source-disk disk_temp_${name} --source-disk-zone $ZONE --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
+  gcloud compute images create nested-${name} --source-disk disk-temp-${name} --source-disk-zone $ZONE --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
 
-gcloud compute disks delete --quiet disk_temp_${name}   --zone ${ZONE}
+gcloud compute disks delete --quiet disk-temp-${name}   --zone ${ZONE}
 
 }
 
