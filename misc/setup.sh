@@ -39,7 +39,11 @@ if [ "$HasSwap" = "0" ]; then
 fi
 
 pip install pip --upgrade
-pip install ansible    
+pip install ansible
+
+curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&
+chmod +x /tmp/docker-machine &&
+cp /tmp/docker-machine /usr/local/bin/docker-machine
 
 curl -sSL https://get.docker.com/ | sh                                                                                                 
 systemctl enable docker                                                                                                                
