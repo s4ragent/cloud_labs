@@ -7,10 +7,10 @@ if [ ! -e  /root/rac_on_xx ]; then
      apt-get update
 
 					sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_release -cs)' contrib non-free' > /etc/apt/sources.list.d/virtualbox.list"
-					wget https://www.virtualbox.org/download/oracle_vbox.asc
-					apt-key add oracle_vbox.asc
+					 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 
 					apt-get install -y git virtualbox-${VBOXVERSION} git python-dev python-pip libssl-dev unzip
+					
 					wget https://releases.hashicorp.com/vagrant/$VAGRANTVERSION	/vagrant_${VAGRANTVERSION}_x86_64.deb
 
 					dpkg --install vagrant_${VAGRANTVERSION}_x86_64.deb
