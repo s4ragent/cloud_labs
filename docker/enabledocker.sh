@@ -2,15 +2,17 @@
 if [ ! -e  /root/rac_on_xx ]; then
    if [ -e /etc/debian_version ]; then
       apt-get update
-      apt-get install -y git screen qemu-utils ansible
+      apt-get install -y git screen qemu-utils python-dev python-pip libssl-dev unzip
    elif [ -e /etc/redhat-release ]; then
       sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
       yum clean all
       yum -y install git screen qemu-img epel-release
-      yum -y install ansible
+      yum -y install python-pip openssl-devel gcc python-devel git unzip --enablerepo=epel 
    fi
    git clone https://github.com/s4ragent/rac_on_xx /root/rac_on_xx
    git clone https://github.com/s4ragent/cloud_labs /root/cloud_labs
+   pip install pip --upgrade
+   pip install ansible
 fi
 
 HasSwap=`free | grep Swap | awk '{print $2}'`
