@@ -32,6 +32,8 @@ create_centos(){
 		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
+# 4cpu 26GB
+#ex create_nested centos n1-highmem-4 200 preemptible
 create_nested(){
 	name=$1
 		IMAGE_OPS="--image nested-${name}"
