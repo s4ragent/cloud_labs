@@ -72,15 +72,15 @@ name=$1
 if [ "$2" != "" ]; then
 	if [ "$3" != "" ]; then
 		if [ "$4" != "" ]; then
-			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:$3:$4"
+			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:$3:$4" --zone ${ZONE}
 		else
-			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$3"	
+			gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$3"	 --zone ${ZONE}
 		fi
 	else
-		gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2"
+		gcloud compute ssh $name --ssh-flag="-g" --ssh-flag="-L $2:127.0.0.1:$2" --zone ${ZONE}
 	fi
 else
-	gcloud compute ssh $name
+	gcloud compute ssh $name --zone ${ZONE}
 fi
 
 
@@ -88,9 +88,23 @@ fi
 
 delete(){
 name=$1
-gcloud compute instances delete $name
+gcloud compute instances delete $name --zone ${ZONE}
 }
 
+change(){
+name=$1
+gcloud compute instances set-machine-type $name --machine-type=$2 --zone ${ZONE}
+}
+
+stop(){
+name=$1
+gcloud compute instances stop $name --zone ${ZONE}
+}
+
+start(){
+name=$1
+gcloud compute instances start $name --zone ${ZONE}
+}
 
 case "$1" in
   "ssh" ) shift;ssh $*;;
@@ -106,7 +120,9 @@ case "$1" in
   "deleteandstart" ) shift;deleteandstart $*;; 
   "get_console" ) shift;get_console $*;;  
   "deleteall" ) shift;deleteall $*;;
-  "startall" ) shift;startall $*;;
+  "start" ) shift;start $*;;
+  "stop" ) shift;stop $*;;
+  "change" ) shift;change $*;;
   "delete" ) shift;delete $*;;
   "creategcedisk" ) shift;creategcedisk $*;;
   "creategceinstance" ) shift;creategceinstance $*;;
