@@ -93,6 +93,7 @@ gcloud compute instances delete $name --zone ${ZONE}
 #n1-standard-1 1cpu	3.75GB 	$7.30
 #n1-standard-2 2cpu 7.5GB  $14.60
 #n1-standard-4 4cpu 15GB   $29.20
+#n1-standard-8	8	cpu 30GB   $58.40
 #n1-highmem-2	 2cpu	 13GB	  	$18.25
 #n1-highmem-4	 4	cpu 26GB   $36.50
 #n1-highmem-8	8	cpu  52GB	   $73
