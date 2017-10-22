@@ -1,5 +1,5 @@
 #!/bin/bash
-ZONE="us-central1-b"
+ZONE="us-central1-c"
 #n1-highmem-4 4vcpu	26 GB
 #g1-small	    1	vcpu  1.70
 
