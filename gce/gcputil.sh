@@ -95,6 +95,7 @@ gcloud compute instances delete $name --zone ${ZONE}
 #n1-standard-4 4cpu 15GB   $29.20
 #n1-highmem-2	 2cpu	 13GB	  	$18.25
 #n1-highmem-4	 4	cpu 26GB   $36.50
+#n1-highmem-8	8	cpu  52GB	   $73
 change(){
 name=$1
 gcloud compute instances set-machine-type $name --machine-type=$2 --zone ${ZONE}
