@@ -97,9 +97,14 @@ gcloud compute instances delete $name --zone ${ZONE}
 #n1-highmem-2	 2cpu	 13GB	  	$18.25
 #n1-highmem-4	 4	cpu 26GB   $36.50
 #n1-highmem-8	8	cpu  52GB	   $73
-change(){
+change_size(){
 name=$1
 gcloud compute instances set-machine-type $name --machine-type=$2 --zone ${ZONE}
+}
+
+change_size2(){
+name=$1
+gcloud compute instances set-machine-type $name --custom-cpu=$2 --custom-memory=$3 --zone ${ZONE}
 }
 
 stop(){
@@ -128,7 +133,8 @@ case "$1" in
   "deleteall" ) shift;deleteall $*;;
   "start" ) shift;start $*;;
   "stop" ) shift;stop $*;;
-  "change" ) shift;change $*;;
+  "change_size" ) shift;change_size $*;;
+  "change_size2" ) shift;change_size2 $*;;
   "delete" ) shift;delete $*;;
   "creategcedisk" ) shift;creategcedisk $*;;
   "creategceinstance" ) shift;creategceinstance $*;;
