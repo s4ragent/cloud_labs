@@ -66,6 +66,11 @@ gcloud compute disks delete --quiet disk-temp-${name}   --zone ${ZONE}
 
 }
 
+create_image(){
+		name=$1
+gcloud compute images delete nested-${name}
+}
+
 ssh(){
 name=$1
 
@@ -122,6 +127,7 @@ case "$1" in
   "reset_password" ) shift;reset_password $*;;
   "create_2012" ) shift;create_2012 $*;;
   "create_image" ) shift;create_image $*;;
+  "delete_image" ) shift;delete_image $*;;
   "create_rhel6" ) shift;create_rhel6 $*;;
   "create_centos" ) shift;create_centos $*;;
   "create_nested" ) shift;create_nested $*;;
