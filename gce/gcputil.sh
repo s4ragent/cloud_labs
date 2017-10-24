@@ -55,7 +55,7 @@ create_ubuntu(){
 #$1 
 create_image_centos(){
 		name=$1
-		IMAGE_OPS="--source-image-family=centos-7 --image-project=centos-cloud"
+		IMAGE_OPS="--source-image-family=centos-7 --source-image-project=centos-cloud"
 
   gcloud compute images create nested-${name} $IMAGE_OPS --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
 
@@ -63,7 +63,7 @@ create_image_centos(){
 
 create_image_ubuntu(){
 		name=$1
-		IMAGE_OPS="--source-image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
+		IMAGE_OPS="--source-image-family=ubuntu-1604-lts  --source-image-project=ubuntu-os-cloud"
 
   gcloud compute images create nested-${name} $IMAGE_OPS --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
 
