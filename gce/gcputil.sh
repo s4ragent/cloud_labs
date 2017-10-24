@@ -134,7 +134,8 @@ case "$1" in
   "delete_image" ) shift;delete_image $*;;
   "create_rhel6" ) shift;create_rhel6 $*;;
   "create_centos" ) shift;create_centos $*;;
-  "create_nested" ) shift;create_nested $*;;
+  "create_image_centos" ) shift;create_image_centos $*;;
+  "create_image_ubuntu" ) shift;create_image_ubuntu $*;;
   "create_ubuntu" ) shift;create_ubuntu $*;;
   "create_centos_docker" ) shift;create_centos_docker $*;;
   "create_ubuntu_docker" ) shift;create_ubuntu_docker $*;;
