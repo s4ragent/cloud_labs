@@ -52,24 +52,27 @@ create_ubuntu(){
 		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family "/ubuntu-os-cloud/ubuntu-1604-lts" --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3
 }
 
-#$1 exists vm name
-create_image(){
+#$1 
+create_image_centos(){
 		name=$1
-		gcloud compute disks snapshot $name --snapshot-names snapshot-${name} --zone $ZONE
-		
-		gcloud compute disks create disk-temp-${name} --source-snapshot snapshot-${name} --zone $ZONE
+		IMAGE_OPS="--source-image-family=centos-7 --image-project=centos-cloud"
 
-		gcloud compute snapshots delete --quiet snapshot-${name}
+  gcloud compute images create nested-${name} $IMAGE_OPS --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
 
-  gcloud compute images create nested-${name} --source-disk disk-temp-${name} --source-disk-zone $ZONE --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
+}
 
-gcloud compute disks delete --quiet disk-temp-${name}   --zone ${ZONE}
+create_image_ubuntu(){
+		name=$1
+		IMAGE_OPS="--source-image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
+
+  gcloud compute images create nested-${name} $IMAGE_OPS --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
 
 }
 
 delete_image(){
 		name=$1
-gcloud compute images delete nested-${name}
+	gcloud compute images delete nested-${name}
+
 }
 
 ssh(){
