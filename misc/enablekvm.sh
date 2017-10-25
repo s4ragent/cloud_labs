@@ -1,8 +1,4 @@
 #!/bin/bash
-
-
-
-#!/bin/bash
 if [ ! -e  /root/rac_on_xx ]; then
    if [ -e /etc/debian_version ]; then
       apt-get update
@@ -15,6 +11,7 @@ if [ ! -e  /root/rac_on_xx ]; then
       yum clean all
       yum -y install git screen qemu-img epel-release
       yum -y install python-pip openssl-devel gcc python-devel git unzip --enablerepo=epel 
+      yum -y install libguestfs libvirt libvirt-client python-virtinst qemu-kvm virt-manager virt-top virt-viewer virt-who virt-install bridge-utils 
       systemctl start libvirtd
       systemctl enable libvirtd
    fi
