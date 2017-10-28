@@ -12,6 +12,21 @@ reset_password(){
 	gcloud compute reset-windows-password $1
 }
 
+#$1 exists vm name
+create_image(){
+		name=$1
+		gcloud compute disks snapshot $name --snapshot-names snapshot-${name} --zone $ZONE
+		
+		gcloud compute disks create disk-temp-${name} --source-snapshot snapshot-${name} --zone $ZONE
+
+		gcloud compute snapshots delete --quiet snapshot-${name}
+
+  gcloud compute images create nested-${name} --source-disk disk-temp-${name} --source-disk-zone $ZONE --licenses "https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
+
+gcloud compute disks delete --quiet disk-temp-${name}   --zone ${ZONE}
+
+}
+
 creategcedisk(){
 	gcloud compute disks create "$1" --size $2 --type "pd-ssd"
 }
@@ -140,6 +155,7 @@ case "$1" in
   "delete_image" ) shift;delete_image $*;;
   "create_rhel6" ) shift;create_rhel6 $*;;
   "create_centos" ) shift;create_centos $*;;
+  "create_nested" ) shift;create_nested $*;;  
   "create_image_centos" ) shift;create_image_centos $*;;
   "create_image_ubuntu" ) shift;create_image_ubuntu $*;;
   "create_ubuntu" ) shift;create_ubuntu $*;;
