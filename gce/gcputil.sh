@@ -71,8 +71,15 @@ create_nested(){
 }
 
 create_ubuntu(){
-		name=$1
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family "/ubuntu-os-cloud/ubuntu-1604-lts" --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3
+		IMAGE_OPS="--image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
+		name=$1	
+		if [ "$4" = "preemptible" ]; then
+  		OPS="--preemptible --maintenance-policy TERMINATE"
+  	else
+  		OPS="	--maintenance-policy MIGRATE"
+		fi
+		
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
 #$1 
