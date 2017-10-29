@@ -19,7 +19,15 @@ if [ ! -e  /root/rac_on_xx ]; then
    git clone https://github.com/s4ragent/cloud_labs /root/cloud_labs
    pip install pip --upgrade
    pip install ansible
+   
+   curl -sSL https://get.docker.com/ | sh                                                                                                 
+systemctl enable docker                                                                                         
+systemctl start docker
+   
+                                                                                         
 fi
+
+
 
 HasSwap=`free | grep Swap | awk '{print $2}'`
 if [ "$HasSwap" = "0" ]; then
@@ -28,4 +36,5 @@ if [ "$HasSwap" = "0" ]; then
 	sh -c 'echo "/var/tmp/swap.img swap swap defaults 0 0" >> /etc/fstab'
 	swapon -a
 fi
+
 
