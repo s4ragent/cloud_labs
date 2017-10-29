@@ -23,8 +23,10 @@ if [ ! -e  /root/rac_on_xx ]; then
    curl -sSL https://get.docker.com/ | sh                                                                                                 
 systemctl enable docker                                                                                         
 systemctl start docker
-   
-                                                                                         
+			mkdir -p /media
+   gsutil cp gs://s4ragent20160429/linuxx64_12201_database.zip /media
+   gsutil cp gs://s4ragent20160429/linuxx64_12201_grid_home.zip /media
+                                                    
 fi
 
 
