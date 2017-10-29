@@ -1,5 +1,7 @@
 #!/bin/bash
 ZONE="us-central1-c"
+#disktype="pd-ssd"
+disktype="pd-standard"
 #n1-highmem-4 4vcpu	26 GB
 #g1-small	    1	vcpu  1.70
 
@@ -28,7 +30,7 @@ gcloud compute disks delete --quiet disk-temp-${name}   --zone ${ZONE}
 }
 
 creategcedisk(){
-	gcloud compute disks create "$1" --size $2 --type "pd-ssd"
+	gcloud compute disks create "$1" --size $2 --type ""
 }
 
 #1 name $2 machine type $3 disksize $4 preemptible
@@ -44,7 +46,7 @@ create_centos(){
   		OPS="	--maintenance-policy MIGRATE"
 		fi
 		
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
 #n1-standard-1 1cpu	3.75GB 	$7.30
@@ -65,12 +67,12 @@ create_nested(){
   		OPS="	--maintenance-policy MIGRATE"
 		fi
 		
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
 create_ubuntu(){
 		name=$1
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family "/ubuntu-os-cloud/ubuntu-1604-lts" --boot-disk-type "pd-ssd" --boot-disk-device-name $name --boot-disk-size $3
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" --image-family "/ubuntu-os-cloud/ubuntu-1604-lts" --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3
 }
 
 #$1 
