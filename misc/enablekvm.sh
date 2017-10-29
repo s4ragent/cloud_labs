@@ -1,4 +1,5 @@
 #!/bin/bash
+#curl -sSL https://get.docker.com/ | https://raw.githubusercontent.com/s4ragent/cloud_labs/master/misc/enablekvm.sh
 if [ ! -e  /root/rac_on_xx ]; then
    if [ -e /etc/debian_version ]; then
       apt-get update
