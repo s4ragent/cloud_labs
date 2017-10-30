@@ -37,7 +37,7 @@ creategcedisk(){
 #ex create_centos centos n1-highmem-4 200 preemptible
 #ex create_centos centos g1-small 20 preemptible
 #ex create_centos centos n1-highmem-2 100 preemptible
-create_centos(){
+create_centos_docker(){
 		IMAGE_OPS="--image-family=centos-7 --image-project=centos-cloud"
 		
 		name=$1	
@@ -50,6 +50,18 @@ create_centos(){
 		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/misc/enablekvm.sh
 }
 
+create_centos(){
+		IMAGE_OPS="--image-family=centos-7 --image-project=centos-cloud"
+		
+		name=$1	
+		if [ "$4" = "preemptible" ]; then
+  		OPS="--preemptible --maintenance-policy TERMINATE"
+  	else
+  		OPS="	--maintenance-policy MIGRATE"
+		fi
+		
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+}
 #n1-standard-1 1cpu	3.75GB 	$7.30
 #n1-standard-2 2cpu 7.5GB  $14.60
 #n1-standard-4 4cpu 15GB   $29.20
@@ -72,6 +84,18 @@ create_nested(){
 }
 
 create_ubuntu(){
+		IMAGE_OPS="--image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
+		name=$1	
+		if [ "$4" = "preemptible" ]; then
+  		OPS="--preemptible --maintenance-policy TERMINATE"
+  	else
+  		OPS="	--maintenance-policy MIGRATE"
+		fi
+		
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+}
+
+create_ubuntu_docker(){
 		IMAGE_OPS="--image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
 		name=$1	
 		if [ "$4" = "preemptible" ]; then
