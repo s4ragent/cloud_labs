@@ -47,7 +47,7 @@ create_centos(){
   		OPS="	--maintenance-policy MIGRATE"
 		fi
 		
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/misc/enablekvm.sh
 }
 
 #n1-standard-1 1cpu	3.75GB 	$7.30
@@ -68,7 +68,7 @@ create_nested(){
   		OPS="	--maintenance-policy MIGRATE"
 		fi
 		
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/misc/enablekvm.sh
 }
 
 create_ubuntu(){
@@ -80,7 +80,7 @@ create_ubuntu(){
   		OPS="	--maintenance-policy MIGRATE"
 		fi
 		
-		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
+		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE --metadata startup-script-url=https://raw.githubusercontent.com/s4ragent/cloud_labs/master/misc/enablekvm.sh
 }
 
 #$1 
