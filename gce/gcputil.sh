@@ -36,6 +36,7 @@ creategcedisk(){
 #1 name $2 machine type $3 disksize $4 preemptible
 #ex create_centos centos n1-highmem-4 200 preemptible
 #ex create_centos centos g1-small 20 preemptible
+#ex create_centos centos n1-highmem-2 100 preemptible
 create_centos(){
 		IMAGE_OPS="--image-family=centos-7 --image-project=centos-cloud"
 		
