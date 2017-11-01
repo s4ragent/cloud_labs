@@ -27,7 +27,7 @@ systemctl start docker
 			mkdir -p /media
    gsutil cp gs://s4ragent20160429/linuxx64_12201_database.zip /media
    gsutil cp gs://s4ragent20160429/linuxx64_12201_grid_home.zip /media
-                                                    
+   gsutil cp gs://s4ragent20160429/ojdbc7.jar /media                                        
 fi
 
 
