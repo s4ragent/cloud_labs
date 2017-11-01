@@ -95,6 +95,7 @@ create_ubuntu(){
 		gcloud compute instances create $name --machine-type $2 --network "default" --can-ip-forward $OPS --scopes "https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/logging.write" $IMAGE_OPS --boot-disk-type $disktype --boot-disk-device-name $name --boot-disk-size $3 --zone $ZONE
 }
 
+#ex create_ubuntu_docker ubuntu n1-highmem-4 200 preemptible
 create_ubuntu_docker(){
 		IMAGE_OPS="--image-family=ubuntu-1604-lts  --image-project=ubuntu-os-cloud"
 		name=$1	
