@@ -85,6 +85,8 @@ create_oraclelinux(){
 	create_linux $name $vmsize $disksize $image_urn	
 }
 
+#create_ubuntu ubuntu Standard_D4_v3 300
+#create_ubuntu ubuntu Standard_D16_v3 300
 create_ubuntu(){
 	image_urn="canonical:ubuntuserver:16.04.0-LTS:latest"
 	name=$1
@@ -151,7 +153,7 @@ else
 fi
 
 }
-
+#resize ubuntu Standard_D16_v3
 resize()
 {
 	name=$1
