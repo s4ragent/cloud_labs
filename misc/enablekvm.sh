@@ -20,7 +20,7 @@ if [ ! -e  /root/rac_on_xx ]; then
    git clone https://github.com/s4ragent/cloud_labs /root/cloud_labs
    pip install pip --upgrade
    pip install ansible
-   
+   pip install pyOpenSSL --upgrade
    curl -sSL https://get.docker.com/ | sh                                                                                                 
 systemctl enable docker                                                                                         
 systemctl start docker
