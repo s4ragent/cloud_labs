@@ -169,7 +169,7 @@ listsize()
 
 case "$1" in
   "create_first" ) shift;create_first $*;;
-  "ssh2" ) shift;ssh2 $*;;
+  "ssh" ) shift;ssh2 $*;;
   "listsize" ) shift;listsize $*;;
   "resize" ) shift;resize $*;;
   "create_2012" ) shift;create_2012 $*;;
