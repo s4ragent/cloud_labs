@@ -154,6 +154,7 @@ fi
 
 }
 #resize ubuntu Standard_D16_v3
+#resize ubuntu Standard_D8_v3
 #resize ubuntu Standard_D2_v3
 resize()
 {
