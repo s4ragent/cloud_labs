@@ -78,7 +78,7 @@ create_centos(){
 }
 
 create_oraclelinux(){
-	image_urn="Oracle:Oracle-Linux:7.2:latest"
+	image_urn="Oracle:Oracle-Linux:7.4:latest"
 	name=$1
 	vmsize=$2
 	disksize=$3
