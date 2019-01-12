@@ -1,7 +1,8 @@
 #!/bin/bash
 prefix="cloudlabs"
 suffix=`ip a show eth0 | grep ether | awk '{print $2}' | sed -e s/://g`
-location="japanwest"
+location="westus2"
+#location="japanwest"
 vnet_addr="10.153.0.0/16"
 snet_addr="10.153.1.0/24"
 
@@ -70,7 +71,7 @@ create_linux(){
 }
 
 create_centos(){
-	image_urn="OpenLogic:CentOS:7.2:latest"
+	image_urn="OpenLogic:CentOS:7.4:latest"
 	name=$1
 	vmsize=$2
 	disksize=$3
