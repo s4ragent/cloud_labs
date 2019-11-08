@@ -86,6 +86,14 @@ create_oraclelinux(){
 	create_linux $name $vmsize $disksize $image_urn	
 }
 
+create_oraclelinux8(){
+	image_urn="Oracle:Oracle-Linux:8:latest"
+	name=$1
+	vmsize=$2
+	disksize=$3
+	create_linux $name $vmsize $disksize $image_urn	
+}
+
 #create_ubuntu ubuntu Standard_D4_v3 300
 #create_ubuntu ubuntu Standard_D16_v3 300
 create_ubuntu(){
@@ -183,6 +191,7 @@ case "$1" in
   "create_2012" ) shift;create_2012 $*;;
   "create_2016" ) shift;create_2016 $*;;
   "create_oraclelinux" ) shift;create_oraclelinux $*;;
+  "create_oraclelinux8" ) shift;create_oraclelinux8 $*;;
   "create_centos" ) shift;create_centos $*;;
   "create_ubuntu" ) shift;create_ubuntu $*;;
   "create_centos_docker" ) shift;create_centos_docker $*;;
