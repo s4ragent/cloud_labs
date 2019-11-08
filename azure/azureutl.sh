@@ -86,6 +86,7 @@ create_oraclelinux(){
 	create_linux $name $vmsize $disksize $image_urn	
 }
 
+#create_oraclelinux8 oraclelinux Standard_B1s 300
 create_oraclelinux8(){
 	image_urn="Oracle:Oracle-Linux:8:latest"
 	name=$1
@@ -96,6 +97,7 @@ create_oraclelinux8(){
 
 #create_ubuntu ubuntu Standard_D4_v3 300
 #create_ubuntu ubuntu Standard_D16_v3 300
+#create_ubuntu ubuntu Standard_B1s 300
 create_ubuntu(){
 	image_urn="canonical:ubuntuserver:16.04.0-LTS:latest"
 	name=$1
