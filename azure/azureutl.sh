@@ -2,7 +2,7 @@
 prefix="cloudlabs"
 suffix=`ip a show eth0 | grep ether | awk '{print $2}' | sed -e s/://g`
 #location="westus2"
-location="japanwest"
+location="japaneast"
 vnet_addr="10.153.0.0/16"
 snet_addr="10.153.1.0/24"
 
