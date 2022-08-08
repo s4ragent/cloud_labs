@@ -128,6 +128,13 @@ create_bastion(){
 	
 }
 
+delete_bastion(){
+	az network bastion delete -n bastion -g $rg_name
+	sleeep 30
+	az network public-ip delete -g $rg_name -n vnet_cloudlabs-ip
+                          
+}
+
 create_centos_docker(){
 		name=$1
 }
@@ -217,4 +224,7 @@ case "$1" in
   "start" ) shift;start $*;;
   "get_External_IP" ) shift;get_External_IP $*;;
   "get_Internal_IP" ) shift;get_Internal_IP $*;;
+  "delete_bastion" ) shift;delete_bastion $*;;
+  "create_bastion" ) shift;create_bastion $*;;
+  
 esac
