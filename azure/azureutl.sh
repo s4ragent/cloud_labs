@@ -123,6 +123,11 @@ create_2019(){
 		az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --admin-password $adminpassword --size $vmsize --data-disk-sizes-gb $disksize  --public-ip-address "" --vnet-name $vnet_name --subnet $snet_name --storage-sku Standard_LRS
 }
 
+create_bastion(){
+	az network public-ip create -g $rg_name -n public_ip_bastion
+	
+}
+
 create_centos_docker(){
 		name=$1
 }
