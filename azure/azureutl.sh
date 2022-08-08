@@ -124,13 +124,15 @@ create_2019(){
 }
 
 create_bastion(){
-	az network public-ip create -g $rg_name -n public_ip_bastion
+	az network public-ip create -g $rg_name -n vnet_cloudlabs-ip
+	sleep 30
+	az network bastion create -n bastion -g $rg_name vnet_cloudlabs-ip --vnet-name $vnet_name --sku Basic 
 	
 }
 
 delete_bastion(){
 	az network bastion delete -n bastion -g $rg_name
-	sleeep 30
+	sleep 30
 	az network public-ip delete -g $rg_name -n vnet_cloudlabs-ip
                           
 }
