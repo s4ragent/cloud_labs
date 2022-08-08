@@ -111,8 +111,14 @@ create_oraclelinux_docker(){
 
 }
 
-create_2012(){
+#ex create_2019 Win2019 Standard_B2s 300 _9012_etaerC
+create_2019(){
 		name=$1
+		vmsize=$2
+		disksize=$3
+		adminpassword=$4
+		image_urn=Win2019Datacenter
+		az vm create --resource-group $rg_name --name $name --image $image_urn --admin-username $adminuser --admin-password $adminpassword --size $vmsize --data-disk-sizes-gb $disksize  --public-ip-address "" --vnet-name $vnet_name --subnet $snet_name --storage-sku Standard_LRS
 }
 
 create_centos_docker(){
