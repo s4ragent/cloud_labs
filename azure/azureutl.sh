@@ -190,8 +190,7 @@ case "$1" in
   "list_size" ) shift;listsize $*;;
   "list_image" ) shift;listimage $*;;
   "resize" ) shift;resize $*;;
-  "create_2012" ) shift;create_2012 $*;;
-  "create_2016" ) shift;create_2016 $*;;
+  "create_2019" ) shift;create_2019 $*;;
   "create_oraclelinux" ) shift;create_oraclelinux $*;;
   "create_oraclelinux8" ) shift;create_oraclelinux8 $*;;
   "create_centos" ) shift;create_centos $*;;
