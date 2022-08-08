@@ -124,7 +124,7 @@ create_2019(){
 }
 
 create_bastion(){
-	az network public-ip create -g $rg_name -n vnet_cloudlabs-ip
+	az network public-ip create -g $rg_name -n vnet_cloudlabs-ip --allocation-method Static
 	sleep 30
 	az network bastion create -n bastion -g $rg_name  --vnet-name $vnet_name --sku Basic --public-ip-address vnet_cloudlabs-ip
 	
