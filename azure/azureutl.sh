@@ -5,6 +5,7 @@ suffix=`ip a show eth0 | grep ether | awk '{print $2}' | sed -e s/://g`
 location="japaneast"
 vnet_addr="10.153.0.0/16"
 snet_addr="10.153.1.0/24"
+AzureBastionSubnet_addr="10.153.2.0/24"
 
 rg_name=rg_${prefix}
 vnet_name=vnet_${prefix}
@@ -48,7 +49,8 @@ fi
 	az network nsg rule create --resource-group $rg_name --nsg-name $nsg_name --name RuleSSH --protocol tcp --direction inbound --priority 1000 --source-address-prefix '*' --source-port-range '*' --destination-address-prefix '*' --destination-port-range 22 --access allow
 
 	az network vnet subnet update --resource-group $rg_name --vnet-name $vnet_name --name $snet_name --network-security-group $nsg_name
-
+	
+	az network vnet subnet create -g $rg_name --vnet-name  $vnet_name --name AzureBastionSubnet --address-prefixes $AzureBastionSubnet_addr 
 	
 }
 
